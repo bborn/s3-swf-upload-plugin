@@ -1,6 +1,7 @@
 module S3SwfUpload
   module ViewHelpers
-    def s3_swf_upload_tag(options = {})
+    
+    def s3_swf_upload_js(var_reference, element_id, options = {})
       buttonWidth             = options[:buttonWidth]  || 100
       buttonHeight            = options[:buttonHeight] || 30
     	flashVersion            = options[:height] || '9.0.0'
@@ -10,10 +11,10 @@ module S3SwfUpload
       fileTypeDescs           = options[:fileTypeDescs] || 'All Files'
       selectMultipleFiles     = options.has_key?(:selectMultipleFiles) ? options[:selectMultipleFiles] : true
       keyPrefix               = options[:keyPrefix] || ''
-    	signaturePath           = options[:signaturePath] || '/s3_uploads.xml'
-    	buttonUpPath            = options[:buttonUpPath] || '/flash/s3_up_button.gif'
-    	buttonOverPath          = options[:buttonOverPath] || '/flash/s3_over_button.gif'
-    	buttonDownPath          = options[:buttonDownPath] || '/flash/s3_down_button.gif'
+    	signaturePath           = options[:signaturePath] || s3_uploads_path(:format => :xml)
+    	buttonUpPath            = options[:buttonUpPath] || asset_path('s3_up_button.gif')
+    	buttonOverPath          = options[:buttonOverPath] || asset_path('s3_over_button.gif')
+    	buttonDownPath          = options[:buttonDownPath] || asset_path('s3_down_button.gif')
     	                                 
     	onFileAdd							  = options[:onFileAdd] || false		
     	onFileRemove						= options[:onFileRemove] || false
@@ -43,20 +44,10 @@ module S3SwfUpload
     	onUploadComplete				= options[:onUploadComplete] || false
     	onUploadIOError					= options[:onUploadIOError] || false
     	onUploadSecurityError		= options[:onUploadSecurityError] || false
-    	onUploadError						= options[:onUploadError] || false
+    	onUploadError						= options[:onUploadError] || false      
     	
-      @include_s3_upload ||= false 
-      @count ||= 1
-      
-      out = ''
-
-      if !@include_s3_upload
-        out << javascript_include_tag('s3_upload')
-        @include_s3_upload = true
-      end
-
-      out << "\n<script type=\"text/javascript\">\n"
-      out << "var s3_swf_#{@count}_object = s3_swf_init('s3_swf_#{@count}', {\n"
+    	out = ''
+      out << "var #{var_reference} = s3_swf_init('#{element_id}', {\n"
       out << "buttonWidth: #{buttonWidth},\n" if buttonWidth
       out << "buttonHeight: #{buttonHeight},\n" if buttonHeight
       out << "flashVersion: '#{flashVersion}',\n" if flashVersion
@@ -153,10 +144,29 @@ module S3SwfUpload
       # This closes out the object (no comma)
       out << "foo: 'bar'"              
       out << "});\n"
-      out << "</script>\n"
+      out    	
+    end
+    
+    def s3_swf_upload_tag(options = {})
+      @include_s3_upload ||= false 
+      @count ||= 1
+      
+      out = ''
+
+      if !@include_s3_upload
+        out << javascript_include_tag('s3_upload')
+        out << stylesheet_link_tag('s3_upload')
+        @include_s3_upload = true
+      end
+
+
       out << "<div id=\"s3_swf_#{@count}\">\n"
       out << "Please <a href=\"http://www.adobe.com/go/getflashplayer\">Update</a> your Flash Player to Flash v#{flashVersion} or higher...\n"
       out << "</div>\n"
+
+      out << "\n<script type=\"text/javascript\">\n"
+      out << s3_swf_upload_tag("s3_swf_#{count}_object", "s3_swf_#{@count}", options)
+      out << "</script>\n"
       
       @count += 1
       out

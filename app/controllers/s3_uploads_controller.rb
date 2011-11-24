@@ -9,6 +9,7 @@ class S3UploadsController < ApplicationController
   include S3SwfUpload::Signature
   
   def index
+    raise 'test'
     bucket          = S3SwfUpload::S3Config.bucket
     access_key_id   = S3SwfUpload::S3Config.access_key_id
     acl             = S3SwfUpload::S3Config.acl
