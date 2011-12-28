@@ -27,11 +27,6 @@ gem 'aws-s3', :require => 'aws/s3'
 <pre><code>$ bundle install
 </code></pre>
 
-3. Run the generator
-
-<pre><code>$ rails generate s3_swf_upload:uploader
-</code></pre>
-
 If you are using Rails 3.1, you will need to move the generated s3_upload.js from the public/javascripts directory to the app/assets/javascripts directory.
 	
 4. Configure your amazon parameters via the generated <code>config/amazon_s3.yml</code> file.
@@ -179,21 +174,7 @@ Removes a specific file from the queue.
 
 h2. Will it work with < Rails 3?
 
-You bet.  The Rails 3 specific gem only makes installation and setup easier. Here are some tips for getting this to work with < Rails 3:
-
-* install it as a plugin <code>script/plugin install git://github.com/nathancolgate/s3-swf-upload-plugin.git</code>
-* copy the "template files":http://github.com/nathancolgate/s3-swf-upload-plugin/tree/master/lib/s3_swf_upload/railties/generators/uploader/templates/ into your application (use the "generator":http://github.com/nathancolgate/s3-swf-upload-plugin/blob/master/lib/s3_swf_upload/railties/generators/uploader/uploader_generator.rb as a road map)
-* copy the "view helpers":http://github.com/nathancolgate/s3-swf-upload-plugin/blob/master/lib/s3_swf_upload/view_helpers.rb into your applications <code>/lib</code> directory.
-* add the view helper and integer monkey patch to an initialization file:
-<code>
-  require 'view_helpers'
-  require 'patch/integer'
-</code>
-* load the config file by adding this to the bottom of your environment.rb file: <code>S3SwfUpload::S3Config.load_config</code>
-* replace references to Rails.root or Rails.env in the <code>/vendor/plugins/s3-swf-upload-plugin/lib/s3_swf_upload/s3_config.rb</code> file.
-* comment out the require railties inside <code>/vendor/plugins/s3-swf-upload-plugin/lib/s3_swf_upload.rb</code>
-* you may need to require 's3_swf_upload' and 'aws/s3' in your environment.rb file
-* your route will be map.resources instead of resources.
+You bet. 
 
 h2. Known Issues
 

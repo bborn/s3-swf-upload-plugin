@@ -9,7 +9,6 @@ Gem::Specification.new do |s|
   s.date = %q{2010-11-16}
   s.description = %q{Rails 3 gem that allows you to upload files directly to S3 from your application using flex for file management, css for presentation, and javascript for behavior.}
   s.email = %q{nathan@brandnewbox.com}
-  s.extra_rdoc_files = ["CHANGELOG", "README.textile", "lib/patch/integer.rb", "lib/s3_swf_upload.rb", "lib/s3_swf_upload/railtie.rb", "lib/s3_swf_upload/railties/generators/s3_swf_upload.rb", "lib/s3_swf_upload/railties/generators/uploader/USAGE", "lib/s3_swf_upload/railties/generators/uploader/templates/amazon_s3.yml", "lib/s3_swf_upload/railties/generators/uploader/templates/s3_down_button.gif", "lib/s3_swf_upload/railties/generators/uploader/templates/s3_over_button.gif", "lib/s3_swf_upload/railties/generators/uploader/templates/s3_up_button.gif", "lib/s3_swf_upload/railties/generators/uploader/templates/s3_upload.js", "lib/s3_swf_upload/railties/generators/uploader/templates/s3_upload.swf", "lib/s3_swf_upload/railties/generators/uploader/templates/s3_uploads_controller.rb", "lib/s3_swf_upload/railties/generators/uploader/uploader_generator.rb", "lib/s3_swf_upload/railties/tasks/crossdomain.xml", "lib/s3_swf_upload/s3_config.rb", "lib/s3_swf_upload/signature.rb", "lib/s3_swf_upload/view_helpers.rb"]
 
   s.files       = `git ls-files`.split("\n") rescue ''
 
